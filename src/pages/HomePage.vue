@@ -1,15 +1,75 @@
 <script>
+import axios from 'axios';
+const endpoint = 'http://localhost:8000/api/words/';
+
 export default {
-    name: 'HomePage'
+    name: 'HomePage',
+
+    data() {
+        return {
+            words: [],
+            filteredWords: [],
+
+            letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+        };
+    },
+
+    methods: {
+        fetchWords() {
+            axios.get(endpoint).then(res => {
+                console.log(res.data);
+                this.words = res.data;
+
+                //filtro parole
+                this.filteredWords = res.data;
+            })
+                .catch(error => {
+                    console.error('Errore nel recupero delle parole:', error);
+                });
+        },
+
+        filterByLetter(letter) {
+            // filtra parole in base alla lettera
+            this.filteredWords = this.words.filter(word => word.term.charAt(0).toUpperCase() === letter);
+        },
+
+        showAllWords() {
+            // filro button show
+            this.filteredWords = this.words;
+        },
+    },
+    created() {
+        this.fetchWords();
+    }
 }
 </script>
 
 <template>
+    <div class="container">
+        <h1 class="mt-4">Glossario</h1>
 
-    <h1>Glossario</h1>
-    <!-- <ul>
-            <li v-for="word in words" :key="word.id" v-text="word.term"></li>
-        </ul> -->
+        <!-- lista parole -->
+        <ul class="list-group mt-4">
+            <li class="list-group-item" v-for="word in filteredWords" :key="word.id">
+                {{ word.term }}
+            </li>
+        </ul>
+
+        <!-- lista delle lettere -->
+        <div class="mt-3">
+            <ul class="pagination justify-content-center d-flex flex-wrap">
+                <li class="page-item" v-for="letter in letters" :key="letter">
+                    <a class="page-link" @click="filterByLetter(letter)">{{ letter }}</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <!-- button show all -->
+        <button class="btn btn-primary mt-4" @click="showAllWords">All</button>
+
+    </div>
 
 </template>
 
