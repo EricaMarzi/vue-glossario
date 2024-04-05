@@ -8,7 +8,7 @@ import NotFoundPage from '../pages/NotFoundPage.vue';
 
 const router = createRouter({
     history: createWebHistory(),
-    linkExatActiveClass: 'active',
+    linkExactActiveClass: 'active',
     routes: [
         { path: '/home', component: HomePage, name: 'home' },
         { path: '/about-us', component: AboutUsPage, name: 'about-us' },
