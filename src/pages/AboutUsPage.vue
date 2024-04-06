@@ -1,11 +1,15 @@
 <script>
+import axios from 'axios';
 export default {
-    name: 'AboutUsPage'
+    name: 'AboutUsPage',
+    data: () => ({
+        users: []
+    })
 }
 </script>
 
 <template>
-    About Us
+    <h1>About Us</h1>
 </template>
 
 <style lang='scss' scoped>
