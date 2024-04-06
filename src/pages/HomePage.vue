@@ -67,7 +67,7 @@ export default {
         <div class="mt-3">
             <ul class="pagination justify-content-center d-flex flex-wrap">
                 <li class="page-item" v-for="letter in letters" :key="letter">
-                    <a class="page-link" @click="filterByLetter(letter)">{{ letter }}</a>
+                    <a class="page-link" role="button" @click="filterByLetter(letter)">{{ letter }}</a>
                 </li>
             </ul>
         </div>
