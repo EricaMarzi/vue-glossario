@@ -1,5 +1,5 @@
 import { reactive } from "vue";
 
-const words = reactive({});
+reactive({});
 
-export { words };
+export default {};
