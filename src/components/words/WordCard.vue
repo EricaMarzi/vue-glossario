@@ -12,8 +12,7 @@ export default {
         <div class="card-header">
             <!-- Tags -->
             <div v-if="word.tags.length">
-                <span v-for="tag in word.tags" class="badge rounded-pill text-black me-2"
-                    :style="{ backgroundColor: tag.color }">
+                <span v-for="tag in word.tags" class="badge rounded-pill  me-2" :style="{ backgroundColor: tag.color }">
                     {{ tag.label }}
                 </span>
             </div>
@@ -33,6 +32,7 @@ export default {
                 </li>
 
             </ul>
+            <div v-else>Non ci sono fonti esterne</div>
         </div>
     </div>
 </template>
