@@ -16,10 +16,7 @@ export default {
 
 <template>
   <AppHeader />
-
-  <main class="container mt-5">
-    <RouterView />
-  </main>
+  <RouterView />
   <AppLoader v-if="store.isLoading" />
 </template>
 
