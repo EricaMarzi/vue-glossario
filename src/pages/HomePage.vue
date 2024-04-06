@@ -83,17 +83,17 @@ export default {
                     <button class="btn btn-custom" @click="showAllWords">All</button>
                 </li>
             </ul>
-        </div>
-        <div v-if="!store.isLoading && words">
-            <!-- lista parole -->
+            <div v-if="!store.isLoading && words">
+                <!-- lista parole -->
 
-            <ul class="row row-gap-2">
-                <li class="col-3" v-for="word in searchedWords" :key="word.id">
-                    ➢ <RouterLink :to="`/words/${word.slug}`" class="term">
-                        {{ word.term }}
-                    </RouterLink>
-                </li>
-            </ul>
+                <ul class="row row-gap-2">
+                    <li class="col-3" v-for="word in searchedWords" :key="word.id">
+                        ➢ <RouterLink :to="`/words/${word.slug}`" class="term">
+                            {{ word.term }}
+                        </RouterLink>
+                    </li>
+                </ul>
+            </div>
         </div>
     </main>
 </template>
