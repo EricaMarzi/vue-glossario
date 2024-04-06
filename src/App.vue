@@ -1,5 +1,4 @@
 <script>
-import axios from 'axios';
 import AppHeader from './components/AppHeader.vue';
 import AppLoader from './components/AppLoader.vue';
 import { store } from './data/store.js';
@@ -9,23 +8,9 @@ export default {
   name: 'Glossario',
   components: { AppHeader, AppLoader },
   data: () => ({
-    words: [],
     store
   }),
 
-
-  methods: {
-    fetchWords() {
-      axios.get(endpoint).then(res => {
-        console.log(res.data);
-
-        this.words = res.data;
-      })
-    }
-  },
-  created() {
-    this.fetchWords();
-  }
 }
 </script>
 

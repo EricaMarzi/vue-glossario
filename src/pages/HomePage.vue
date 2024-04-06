@@ -1,28 +1,38 @@
 <script>
 import axios from 'axios';
+import AppSearch from '../components/AppSearch.vue';
 import { store } from '../data/store';
-import { RouterLink } from 'vue-router';
 const endpoint = 'http://localhost:8000/api/words/';
 
 export default {
     name: 'HomePage',
+    data: () => ({
+        store,
+        searchedText: '',
+        words: [],
+        filteredWords: [],
 
-    data() {
-        return {
-            words: [],
-            filteredWords: [],
+        letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+    }),
 
-            letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-            store
-        };
+    components: { AppSearch },
+    computed: {
+        // Funzione per filtrare i tasks nella barra di ricerca 
+        searchedWords() {
+            const text = this.searchedText.toLowerCase();
+            if (!text) return this.filteredWords;
+            return this.filteredWords.filter(word => word.term.toLowerCase().includes(text));
+        },
     },
-
     methods: {
+        fetchSearchedText(text) {
+            this.searchedText = text;
+        },
+
         fetchWords() {
             store.isLoading = true;
             axios.get(endpoint).then(res => {
-                console.log(res.data);
                 this.words = res.data;
 
                 //filtro parole
@@ -54,6 +64,15 @@ export default {
 </script>
 
 <template>
+
+    <!-- Ricerca words -->
+    <AppSearch :placeholder="'Cerca termine...'" @live-text="fetchSearchedText" />
+
+    <h1>Glossario</h1>
+    <!-- <ul>
+            <li v-for="word in words" :key="word.id" v-text="word.term"></li>
+        </ul> -->
+
     <h1 class="my-5 text-center title">Il Glossario del Piccolo Sviluppatore</h1>
 
     <!-- lista delle lettere -->
@@ -70,9 +89,17 @@ export default {
     </div>
     <div v-if="!store.isLoading && words">
         <!-- lista parole -->
-
+        <!-- 
         <ul class="grid-container p-5">
             <li v-for="word in filteredWords" :key="word.id">
+                <RouterLink :to="`/words/${word.slug}`" class="term">
+                    {{ word.term }}
+                </RouterLink>
+            </li>
+        </ul> -->
+
+        <ul class="grid-container p-5">
+            <li v-for="word in searchedWords" :key="word.id">
                 ➢ <RouterLink :to="`/words/${word.slug}`" class="term">
                     {{ word.term }}
                 </RouterLink>
