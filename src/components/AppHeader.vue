@@ -10,7 +10,7 @@ export default {
         <nav class="navbar bg-nav">
             <div class="px-5 d-flex gap-3">
 
-                <img src="/img/logo-glossario.png" alt="Logo" class="logo">
+                <img src="/img/logo-glossario.webp" alt="Logo" class="logo">
                 <RouterLink class="navbar-brand button" :to="{ name: 'home' }">Home</RouterLink>
                 <RouterLink class="navbar-brand button" :to="{ name: 'about-us' }">About Us</RouterLink>
             </div>
@@ -23,8 +23,7 @@ export default {
     background-color: #def9fe;
 
     .logo {
-        width: 50px;
-        border-radius: 50%;
+        width: 100px;
     }
 }
 
