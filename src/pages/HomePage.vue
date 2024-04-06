@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import { store } from '../data/store';
 const endpoint = 'http://localhost:8000/api/words/';
 
 export default {
@@ -12,11 +13,13 @@ export default {
 
             letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
                 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+            store
         };
     },
 
     methods: {
         fetchWords() {
+            store.isLoading = true;
             axios.get(endpoint).then(res => {
                 console.log(res.data);
                 this.words = res.data;
@@ -26,6 +29,10 @@ export default {
             })
                 .catch(error => {
                     console.error('Errore nel recupero delle parole:', error);
+                    // Redirect programmatico alla pagina not found
+                    this.$router.push({ name: 'not-found' });
+                }).then(() => {
+                    store.isLoading = false;
                 });
         },
 
@@ -35,7 +42,7 @@ export default {
         },
 
         showAllWords() {
-            // filro button show
+            // filtro button show
             this.filteredWords = this.words;
         },
     },
@@ -46,9 +53,9 @@ export default {
 </script>
 
 <template>
-    <div class="container">
-        <h1 class="mt-4">Glossario</h1>
+    <h1 class="mt-4">Glossario</h1>
 
+    <div v-if="!store.isLoading && words">
         <!-- lista parole -->
         <ul class="list-group mt-4">
             <li class="list-group-item" v-for="word in filteredWords" :key="word.id">
