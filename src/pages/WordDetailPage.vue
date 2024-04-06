@@ -31,11 +31,14 @@ export default {
 
 <template>
     <div v-if="!store.isLoading && word">
-        <h1 class="mb-5">Termine: {{ word.term }}</h1>
+        <h1 class="mb-3 title">{{ word.term }}</h1>
         <WordCard :word="word" />
     </div>
 </template>
 
 <style lang='scss' scoped>
-/* style here */
+.title {
+    text-transform: capitalize;
+    color: #105781;
+}
 </style>

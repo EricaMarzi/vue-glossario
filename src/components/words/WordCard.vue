@@ -8,37 +8,46 @@ export default {
 </script>
 
 <template>
-    <div class="card text-center">
-        <div class="card-header">
-            <!-- Tags -->
-            <div v-if="word.tags.length">
-                <span v-for="tag in word.tags" class="badge rounded-pill  me-2" :style="{ backgroundColor: tag.color }">
-                    {{ tag.label }}
-                </span>
-            </div>
-        </div>
-        <div class="card-body">
-            <!-- Description -->
-            <p class="card-text">{{ word.description }}</p>
-
-        </div>
-        <div class="card-footer text-body-secondary">
-            <!-- Links -->
-            <ul v-if="word.links.length" class="list-group list-group-horizontal">
-                <li v-for="link in word.links" :key="link.label" class="list-group-item">
-                    <a target="_blank" :href="link.url">
-                        {{ link.label }}
-                    </a>
-                </li>
-
-            </ul>
-            <div v-else>Non ci sono fonti esterne</div>
-        </div>
+    <!-- Tags -->
+    <div v-if="word.tags.length" class="mb-3">
+        <span v-for="tag in word.tags" class="badge rounded-pill  me-2" :style="{ backgroundColor: tag.color }">
+            #{{ tag.label }}
+        </span>
     </div>
+    <!-- Description -->
+    <div class="separator mb-3">
+        <p class="description">{{ word.description }}</p>
+    </div>
+
+    <!-- Links -->
+
+    <div v-if="word.links.length">
+        <span class="bold">Fonti:</span>
+        <ul>
+            <li v-for="link in word.links" :key="link.label">
+                ➢ <a target="_blank" :href="link.url">{{ link.label }}</a>
+            </li>
+        </ul>
+    </div>
+
+
 </template>
 
 <style lang='scss' scoped>
-.list-group-horizontal {
-    justify-content: center;
+.separator {
+    width: 100%;
+    border-bottom: 1px solid #c2f0f8;
+}
+
+.bold {
+    font-weight: 600;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    color: #a72c23;
 }
 </style>
