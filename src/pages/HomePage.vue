@@ -9,7 +9,6 @@ export default {
     data: () => ({
         store,
         searchedText: '',
-        placeholder: 'Cerca termine...',
         words: [],
         filteredWords: [],
 
@@ -20,18 +19,20 @@ export default {
     components: { AppSearch },
     computed: {
         // Funzione per filtrare i tasks nella barra di ricerca 
-        // filteredWords() {
-        //     const text = this.searchedText.toLowerCase();
-        //     const words = this.store.words;
-        //     console.log(this.store.words);
-        //     return words.filter(word => word.term.toLowerCase().includes(text));
-        // },
+        searchedWords() {
+            const text = this.searchedText.toLowerCase();
+            if (!text) return this.filteredWords;
+            return this.filteredWords.filter(word => word.term.toLowerCase().includes(text));
+        },
     },
     methods: {
+        fetchSearchedText(text) {
+            this.searchedText = text;
+        },
+
         fetchWords() {
             store.isLoading = true;
             axios.get(endpoint).then(res => {
-                console.log(res.data);
                 this.words = res.data;
 
                 //filtro parole
@@ -65,7 +66,7 @@ export default {
 <template>
 
     <!-- Ricerca words -->
-    <AppSearch :placeholder="placeholder" />
+    <AppSearch :placeholder="'Cerca termine...'" @live-text="fetchSearchedText" />
 
     <h1>Glossario</h1>
     <!-- <ul>
@@ -88,10 +89,18 @@ export default {
     </div>
     <div v-if="!store.isLoading && words">
         <!-- lista parole -->
-
+        <!-- 
         <ul class="grid-container p-5">
             <li v-for="word in filteredWords" :key="word.id">
                 <RouterLink :to="`/words/${word.slug}`" class="term">
+                    {{ word.term }}
+                </RouterLink>
+            </li>
+        </ul> -->
+
+        <ul class="grid-container p-5">
+            <li v-for="word in searchedWords" :key="word.id">
+                ➢ <RouterLink :to="`/words/${word.slug}`" class="term">
                     {{ word.term }}
                 </RouterLink>
             </li>
