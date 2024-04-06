@@ -7,16 +7,61 @@ export default {
 
 <template>
     <header>
-        <nav class="navbar bg-body-tertiary">
-            <div class="px-5">
+        <nav class="navbar bg-nav">
+            <div class="px-5 d-flex gap-3">
 
-                <RouterLink class="navbar-brand" :to="{ name: 'home' }">Home</RouterLink>
-                <RouterLink class="navbar-brand" :to="{ name: 'about-us' }">About Us</RouterLink>
+                <img src="/img/logo-glossario.png" alt="Logo" class="logo">
+                <RouterLink class="navbar-brand button" :to="{ name: 'home' }">Home</RouterLink>
+                <RouterLink class="navbar-brand button" :to="{ name: 'about-us' }">About Us</RouterLink>
             </div>
         </nav>
     </header>
 </template>
 
 <style lang='scss' scoped>
-/* style here */
+.bg-nav {
+    background-color: #def9fe;
+
+    .logo {
+        width: 50px;
+        border-radius: 50%;
+    }
+}
+
+
+
+
+.button {
+    color: #00273e;
+    text-decoration: none;
+    font-size: 25px;
+    border: none;
+    background: none;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+}
+
+.button::before {
+    margin-left: auto;
+}
+
+.button::after,
+.button::before {
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: #a72c23;
+    display: block;
+    transition: 0.5s;
+}
+
+.button:hover::after,
+.button:hover::before {
+    width: 100%;
+}
+
+.button.active::after,
+.button.active::before {
+    width: 100%;
+}
 </style>
