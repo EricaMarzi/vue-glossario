@@ -30,10 +30,13 @@ export default {
 </script>
 
 <template>
-    <div v-if="!store.isLoading && word">
-        <h1 class="mb-3 title">{{ word.term }}</h1>
-        <WordCard :word="word" />
-    </div>
+    <main class="container mt-5">
+        <div v-if="!store.isLoading && word">
+
+            <h1 class="mb-3 title">{{ word.term }}</h1>
+            <WordCard :word="word" />
+        </div>
+    </main>
 </template>
 
 <style lang='scss' scoped>
