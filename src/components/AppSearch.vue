@@ -1,13 +1,22 @@
 <script>
 export default {
-    name: 'AppSearch'
+    name: 'AppSearch',
+    emits: ['live-text'],
+    props: { placeholder: String }
 }
 </script>
 
 <template>
-    search
+    <div class="input-group">
+        <input type="text" class="form-control" autofocus :placeholder="placeholder" v-model.trim="searchedText"
+            @keyup="$emit('live-text', searchedText)">
+        <button class="input-group-text" id="basic-addon1"> <i class="fas fa-search"></i></button>
+    </div>
 </template>
 
 <style lang='scss' scoped>
 /* style here */
+.input-group {
+    max-width: 400px;
+}
 </style>
