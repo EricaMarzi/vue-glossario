@@ -1,64 +1,90 @@
 <script>
 import axios from 'axios';
+import { store } from '../data/store';
+const endpoint = 'http://localhost:8000/api/users/';
+
 export default {
     name: 'AboutUsPage',
     data: () => ({
-        users: []
-    })
+        users: [],
+        store
+    }),
+    methods: {
+        async fetchUsers() {
+            store.isLoading = true;
+            try {
+                const res = await axios.get(endpoint);
+                this.users = res.data;
+            } catch (err) {
+                console.error(err);
+            }
+            store.isLoading = false;
+        }
+    },
+    created() {
+        this.fetchUsers();
+    }
 }
 </script>
 
 <template>
     <section class="container my-4">
-        <h1>About Us</h1>
+        <h1 class="mb-3">About Us</h1>
 
-        <div class="card">
-            <div class="content">
-                <div class="back">
-                    <div class="back-content">
-                        <svg stroke="#ffffff" xmlns:xlink="http://www.w3.org/1999/xlink"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" height="50px" width="50px"
-                            fill="#ffffff">
+        <div v-if="!store.isLoading && users" class="d-flex justify-content-between ">
 
-                            <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+            <!-- Card -->
+            <div v-for="user in users" :key="user.id" class="card">
+                <div class="content">
+                    <div class="back">
+                        <div class="back-content">
+                            <svg stroke="#ffffff" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" height="50px" width="50px"
+                                fill="#ffffff">
 
-                            <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
+                                <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+
+                                <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
 
 
-                        </svg>
-                        <strong>Danilo Amico</strong>
-                    </div>
-                </div>
-                <div class="front">
-
-                    <div class="img">
-                        <div class="circle">
-                        </div>
-                        <div class="circle" id="right">
-                        </div>
-                        <div class="circle" id="bottom">
+                            </svg>
+                            <strong>{{ user.name }}</strong>
                         </div>
                     </div>
+                    <div class="front">
 
-                    <div class="front-content">
-                        <div class="description">
-                            <img id="admin-images"
-                                src="../../public/img/4B4323D6-826F-457B-963A-E79939B54FD4_1_105_c.jpeg" alt=""
-                                class="img-fluid rounded">
-                            <div class="title">
-                                <p class="title">
-                                    <strong>Spaguetti Bolognese</strong>
-                                </p>
-
+                        <div class="img">
+                            <div class="circle">
                             </div>
-                            <p class="card-footer">
-                                30 Mins &nbsp; | &nbsp; 1 Serving
-                            </p>
+                            <div class="circle" id="right">
+                            </div>
+                            <div class="circle" id="bottom">
+                            </div>
+                        </div>
+
+                        <div class="front-content">
+                            <div class="description">
+                                <img v-if="user.image" id="admin-images"
+                                    src="../../public/img/4B4323D6-826F-457B-963A-E79939B54FD4_1_105_c.jpeg" alt=""
+                                    class="img-fluid rounded">
+                                <div class="title">
+                                    <p class="title">
+                                        <strong>{{ user.email }}</strong>
+                                    </p>
+
+                                </div>
+                                <p class="card-footer">
+                                    30 Mins &nbsp; | &nbsp; 1 Serving
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Fine Card -->
+
         </div>
+
     </section>
 
 </template>
@@ -69,6 +95,7 @@ export default {
     overflow: visible;
     width: 190px;
     height: 254px;
+    border-color: transparent;
 }
 
 .content {
@@ -182,10 +209,6 @@ export default {
     font-size: 11px;
     max-width: 100%;
     text-align: center;
-}
-
-.title p {
-    width: 50%;
 }
 
 .card-footer {
