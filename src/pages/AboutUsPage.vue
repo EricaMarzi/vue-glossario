@@ -55,6 +55,7 @@ export default {
 <style lang='scss' scoped>
 .title {
     color: #105781;
+    text-align: center;
 }
 
 .card-wrap::after {
