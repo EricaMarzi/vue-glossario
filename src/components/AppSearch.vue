@@ -10,7 +10,7 @@ export default {
     <div class="input-group">
         <input type="text" class="form-control input-custom" autofocus :placeholder="placeholder"
             v-model.trim="searchedText" @keyup="$emit('live-text', searchedText)">
-        <button class="input-group-text btn-custom" id="basic-addon1"> <i class="fas fa-search"></i></button>
+        <button class="input-group-text btn btn-custom" id="basic-addon1"> <i class="fas fa-search"></i></button>
     </div>
 </template>
 
