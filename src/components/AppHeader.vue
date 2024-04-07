@@ -21,6 +21,7 @@ export default {
 <style lang='scss' scoped>
 .bg-nav {
     background-color: #def9fe;
+    box-shadow: 0px 0px 10px 0px #def9fe;
 
     .logo {
         width: 100px;
