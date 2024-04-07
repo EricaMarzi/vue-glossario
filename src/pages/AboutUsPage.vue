@@ -73,7 +73,7 @@ img {
     text-align: left;
 
     img {
-        box-shadow: 10px 10px 0px 0px #caeff5;
+        box-shadow: -10px 10px 0px 0px #caeff5;
         float: left;
     }
 
@@ -87,7 +87,7 @@ img {
 
     img {
         float: right;
-        box-shadow: -10px 10px 0px 0px #caeff5;
+        box-shadow: 10px 10px 0px 0px #caeff5;
     }
 
     .box-text {
