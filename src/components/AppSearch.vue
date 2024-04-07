@@ -1,8 +1,12 @@
 <script>
 export default {
     name: 'AppSearch',
+    data: () => ({
+        searchedText: '',
+    }),
     emits: ['live-text'],
     props: { placeholder: String }
+
 }
 </script>
 
