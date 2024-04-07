@@ -10,8 +10,6 @@ export default {
         store,
         searchedText: '',
         words: [],
-        filteredWords: [],
-
         letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
     }),
@@ -21,9 +19,20 @@ export default {
         // Funzione per filtrare i tasks nella barra di ricerca 
         searchedWords() {
             const text = this.searchedText.toLowerCase();
-            if (!text) return this.filteredWords;
-            return this.filteredWords.filter(word => word.term.toLowerCase().includes(text));
+            if (!text) return this.words;
+            return this.words.filter(word => word.term.toLowerCase().includes(text));
         },
+        wordsPerLetter() {
+            let wordsPerLetter = [];
+            this.letters.forEach(letter => {
+                let tempObject = {};
+                tempObject['letter'] = letter;
+                tempObject['words'] = this.searchedWords.filter(word => word.term.charAt(0).toUpperCase() === letter);
+                wordsPerLetter.push(tempObject);
+
+            });
+            return wordsPerLetter;
+        }
     },
     methods: {
         fetchSearchedText(text) {
@@ -35,8 +44,6 @@ export default {
             axios.get(endpoint).then(res => {
                 this.words = res.data;
 
-                //filtro parole
-                this.filteredWords = res.data;
             })
                 .catch(error => {
                     console.error('Errore nel recupero delle parole:', error);
@@ -46,15 +53,9 @@ export default {
                     store.isLoading = false;
                 });
         },
-
-        filterByLetter(letter) {
-            // filtra parole in base alla lettera
-            this.filteredWords = this.words.filter(word => word.term.charAt(0).toUpperCase() === letter);
-        },
-
         showAllWords() {
             // filtro button show
-            this.filteredWords = this.words;
+            this.searchedText = '';
         },
     },
     created() {
@@ -76,7 +77,8 @@ export default {
         <div class="mt-3">
             <ul class="pagination justify-content-center d-flex flex-wrap">
                 <li class="page-item" v-for="letter in letters" :key="letter">
-                    <a class="page-link alphabet" role="button" @click="filterByLetter(letter)">{{ letter }}</a>
+                    <a :href="`#${letter}`" class="page-link alphabet" role="button">{{
+                        letter }}</a>
                 </li>
                 <li>
                     <!-- button show all -->
@@ -84,10 +86,25 @@ export default {
                 </li>
             </ul>
             <div v-if="!store.isLoading && words">
-                <!-- lista parole -->
 
-                <ul class="row row-gap-2">
-                    <li class="col-3" v-for="word in searchedWords" :key="word.id">
+
+                <!-- lista parole raggruppate per lettera-->
+                <ul v-if="!searchedText" class="row row-gap-2">
+                    <li class="col-12" v-for="group in wordsPerLetter" :key="group.letter">
+                        <h4 :id="group.letter">{{ group.letter }}</h4>
+                        <ul>
+                            <li v-for="word in group.words" :key="word.id">
+                                ➢ <RouterLink :to="`/words/${word.slug}`" class="term">
+                                    {{ word.term }}
+                                </RouterLink>
+                            </li>
+                        </ul>
+                        <hr>
+                    </li>
+                </ul>
+                <!-- Lista parola cercate -->
+                <ul v-else>
+                    <li v-for="word in searchedWords" :key="word.id">
                         ➢ <RouterLink :to="`/words/${word.slug}`" class="term">
                             {{ word.term }}
                         </RouterLink>
