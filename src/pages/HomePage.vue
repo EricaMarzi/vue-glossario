@@ -44,8 +44,6 @@ export default {
             axios.get(endpoint).then(res => {
                 this.words = res.data;
 
-                //filtro parole
-                this.filteredWords = res.data;
             })
                 .catch(error => {
                     console.error('Errore nel recupero delle parole:', error);
