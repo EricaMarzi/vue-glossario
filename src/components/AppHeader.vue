@@ -22,6 +22,7 @@ export default {
 .bg-nav {
     background-color: #def9fe;
     box-shadow: 0px 0px 20px 0px #88e2f3;
+    height: 90px;
 
     .logo {
         width: 100px;
