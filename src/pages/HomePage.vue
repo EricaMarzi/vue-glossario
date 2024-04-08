@@ -79,15 +79,16 @@ export default {
         <div class="mt-3">
             <ul class="pagination justify-content-center d-flex flex-wrap">
                 <li class="page-item" v-for="letter in letters" :key="letter">
-                    <a :href="`#${letter}`" class="page-link alphabet" role="button" @click="selectedLetter = letter">{{
-                        letter }}</a>
+                    <a :href="`#${letter}`" class="page-link alphabet" role="button" @click="selectedLetter = letter"
+                        :class="{ 'active': selectedLetter === letter }">{{
+                            letter }}</a>
                 </li>
                 <li>
                     <!-- button show all -->
                     <button class="btn btn-custom" @click="showAllWords">All</button>
                 </li>
             </ul>
-            <div v-if="!store.isLoading && words" class="words-container">
+            <div v-if="!store.isLoading && words" class="words-container mt-4">
 
 
                 <!-- lista parole raggruppate per lettera-->
@@ -123,7 +124,9 @@ export default {
     color: #105781;
 }
 
-
+.active {
+    background-color: #def9fe;
+}
 
 .alphabet {
     color: #a72c23;
@@ -133,9 +136,9 @@ export default {
 
     &:hover {
         background-color: #def9fe;
-        ;
     }
 }
+
 
 .btn-custom {
     background-color: #a72c23;
@@ -162,12 +165,11 @@ ul {
 }
 
 .words-container {
-    margin-top: 30px;
+    // margin-top: 30px;
     height: calc(100vh / 3 * 2 - 50px);
     overflow-x: hidden;
     overflow-y: auto;
     scroll-behavior: smooth;
-    box-shadow: 0 0 5px rgb(219, 219, 219);
     padding: 10px 15px;
     border-radius: 10px;
 
@@ -180,5 +182,24 @@ ul {
             color: #963825;
         }
     }
+}
+
+
+
+//scrollbar
+
+.words-container::-webkit-scrollbar {
+    width: 12px;
+}
+
+.words-container::-webkit-scrollbar-track {
+    background-color: #def9fe;
+    box-shadow: inset 0 0 5px #88e2f3;
+    border-radius: 5px;
+}
+
+.words-container::-webkit-scrollbar-thumb {
+    background-color: #a72c23cc;
+    border-radius: 5px;
 }
 </style>
