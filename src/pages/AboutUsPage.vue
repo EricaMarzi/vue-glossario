@@ -37,7 +37,7 @@ export default {
                 <div class="my-5">
 
                     <div class="box-img">
-                        <img :src="`/img/${user.image}`" :alt="user.name" class="img-fluid">
+                        <img :src="`/img/${user.image}`" :alt="user.name" class="img-fluid rounded">
                     </div>
                     <div class="box-text">
                         <h3 class="name">{{ user.name }}</h3>
