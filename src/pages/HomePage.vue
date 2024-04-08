@@ -173,6 +173,8 @@ ul {
     padding: 10px 15px;
     border-radius: 10px;
 
+
+
     .letter-group.active-letter {
         h4 {
             color: #963825;

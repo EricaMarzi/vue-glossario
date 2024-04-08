@@ -1,6 +1,7 @@
 <script>
 import WordsList from '../components/words/WordsList.vue';
 import axios from 'axios';
+import { store } from '../data/store';
 const defaultEndpoint = 'http://localhost:8000/api/';
 export default {
     name: 'TagWordsPage',
@@ -8,11 +9,11 @@ export default {
     data: () => ({
         words: [],
         tagLabel: '',
-        isLoading: false
+        store
     }),
     methods: {
         async fetchWords() {
-            this.isLoading = true;
+            store.isLoading = true;
             try {
                 const res = await axios.get(defaultEndpoint + `tags/${this.$route.params.slug}/words`)
                 const { words, label } = res.data;
@@ -22,19 +23,30 @@ export default {
                 console.error(err);
                 this.$router.push({ name: 'not-found' });
             }
-            this.isLoading = false;
+            store.isLoading = false;
         }
     },
     created() {
         this.fetchWords();
+
+    },
+
+    watch: {
+        '$route'(to, from) {
+            if (to.params.slug !== from.params.slug) {
+                this.fetchWords();
+            }
+        }
     }
 }
 </script>
 
 <template>
     <div class="container mt-5">
-        <h1 class="my-3">{{ tagLabel }} Words </h1>
-        <WordsList v-if="!isLoading" :words="words" />
+        <!-- <h1 class="my-3">{{ tagLabel }} Words </h1> -->
+        <h1 class="my-3">Words con tag <span class="badge rounded-pill bg-secondary me-2">#{{ tagLabel }} </span>
+        </h1>
+        <WordsList v-if="!isLoading && words" :words="words" />
 
     </div>
 </template>
