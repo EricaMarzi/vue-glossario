@@ -20,6 +20,4 @@ export default {
   <AppLoader v-if="store.isLoading" />
 </template>
 
-<style lang='scss' scoped>
-/* style here */
-</style>
+<style lang='scss' scoped></style>

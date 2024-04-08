@@ -69,7 +69,7 @@ export default {
 <template>
     <main class="container mt-3 d-flex flex-column align-items-center row-gap-4">
 
-        <h1 class="mt-3 title">Il Glossario del Piccolo Sviluppatore</h1>
+        <h1 class="mt-5 title">Il Glossario del Piccolo Sviluppatore</h1>
 
         <!-- Ricerca words -->
         <AppSearch :placeholder="'Cerca termine...'" @live-text="fetchSearchedText" class="input" />
